@@ -97,6 +97,27 @@ app.get("/getSlavesDetails", (req, res, next) => {
   });
 });
 
+app.get("/getSASTDetails", (req, res, next) => {
+	  getDetails("jenkins", "vulnerability_sast_scan")
+		.then(data => {
+		  if (data.length > 0) {
+			res.json(data);
+		  } else {
+			res.json(
+			  "No data is present at moment. Please check your configuration..."
+			);
+		  }
+		})
+		.catch(err => {
+		  res.json(
+			"Either Jenkins or mongoDB is not configured properly. Please check logs and configuration..."
+		  );
+		});
+    
+  });
+});
+
+
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
